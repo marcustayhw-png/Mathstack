@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { Button } from "./button";
+import Image from "next/image";
 
 const navItems = [
   { href: "/notes", label: "Notes" },
@@ -14,28 +15,6 @@ const navItems = [
   { href: "/tuition", label: "Tuition" },
   { href: "/about", label: "About" },
 ];
-
-// Enso-inspired SVG logo — an open circle with a small leaf
-function SatoriLogo({ size = 32 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Open enso circle — hand-drawn feel, doesn't quite close */}
-      <path
-        d="M20 6 C29.5 6, 36 12.5, 36 20 C36 27.5, 29.5 34, 20 34 C10.5 34, 4 27.5, 4 20 C4 14 8 9 14 7"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* Tiny leaf at the opening */}
-      <path
-        d="M18.5 5.5 C18.5 4, 20 3, 21.5 4.5 C20.5 5.5, 19 6.5, 18.5 5.5Z"
-        fill="currentColor"
-        opacity="0.8"
-      />
-    </svg>
-  );
-}
 
 export function Navigation() {
   const pathname = usePathname();
@@ -67,20 +46,17 @@ export function Navigation() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-3 text-foreground hover:text-primary transition-colors duration-300 group"
+            className="flex items-center transition-opacity duration-300 hover:opacity-80 group"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <span className="text-primary transition-transform duration-500 group-hover:rotate-12">
-              <SatoriLogo size={26} />
-            </span>
-            <div className="flex flex-col leading-none">
-              <span className="text-[15px] font-bold tracking-wide" style={{ fontFamily: "'Quicksand', sans-serif" }}>
-                Satori Education Studio
-              </span>
-              <span className="text-[9px] font-semibold tracking-[0.2em] text-muted-foreground uppercase opacity-70">
-                Learning Space
-              </span>
-            </div>
+            <Image
+              src="/logo-horizontal.jpg"
+              alt="Satori Education Studio"
+              width={180}
+              height={60}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}
