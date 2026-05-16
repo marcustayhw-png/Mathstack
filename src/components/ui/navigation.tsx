@@ -46,15 +46,16 @@ export function Navigation() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center transition-opacity duration-300 hover:opacity-80 group"
+            className="flex items-center transition-all duration-300 hover:opacity-75 group"
             onClick={() => setMobileMenuOpen(false)}
           >
             <Image
               src="/logo-horizontal.jpg"
               alt="Satori Education Studio"
-              width={180}
-              height={60}
-              className="h-10 w-auto object-contain"
+              width={200}
+              height={67}
+              className="h-9 w-auto object-contain"
+              style={{ mixBlendMode: "multiply" }}
               priority
             />
           </Link>
