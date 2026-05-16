@@ -519,66 +519,90 @@ export default function TuitionPage() {
           {/* Two-column layout: phases + pricing */}
           <motion.div variants={stagger} className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
 
-            {/* Left — Phase timeline */}
+            {/* Left — Phase cards */}
             <motion.div variants={fadeUp} className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/85 p-7 shadow-sm">
-              <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/6 blur-2xl" />
-              <div className="relative z-10 mb-6 space-y-1">
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">How It Unfolds</p>
-                <h3 className="text-xl font-bold">3 months. 3 phases.</h3>
-                <p className="text-sm text-muted-foreground">Each month builds on the last — from foundations to full confidence.</p>
+              <div className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-primary/6 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-12 -left-8 h-40 w-40 rounded-full bg-accent/8 blur-2xl" />
+
+              {/* Header */}
+              <div className="relative z-10 mb-7 space-y-1.5">
+                <p className="text-xs font-bold uppercase tracking-[0.26em] text-primary">How It Unfolds</p>
+                <h3 className="text-2xl font-bold tracking-tight">Three phases. One transformation.</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Each phase builds on the last — from rediscovering foundations to exam-day confidence.</p>
               </div>
-              <div className="relative z-10 space-y-0">
+
+              {/* Phase cards stacked */}
+              <div className="relative z-10 space-y-3">
                 {[
                   {
-                    month: "Month 1",
+                    phase: "Phase 01",
                     label: "Rebuild the Roots",
                     desc: "We go back without shame — identifying every gap and patching them gently, one at a time. No rushing.",
-                    color: "bg-[oklch(0.88_0.04_148)/60] text-[oklch(0.30_0.09_148)]",
-                    line: "bg-[oklch(0.75_0.06_148)/50]",
+                    accent: "border-l-[oklch(0.65_0.10_148)]",
+                    numBg: "bg-[oklch(0.88_0.04_148)/70]",
+                    numText: "text-[oklch(0.28_0.09_148)]",
+                    tagBg: "bg-[oklch(0.88_0.04_148)/50]",
+                    tagText: "text-[oklch(0.28_0.09_148)]",
+                    icon: "🌱",
                   },
                   {
-                    month: "Month 2",
+                    phase: "Phase 02",
                     label: "Build Upward",
                     desc: "With a solid base in place, we layer on concepts systematically — connecting the dots between topics.",
-                    color: "bg-primary/10 text-primary",
-                    line: "bg-primary/20",
+                    accent: "border-l-primary",
+                    numBg: "bg-primary/12",
+                    numText: "text-primary",
+                    tagBg: "bg-primary/10",
+                    tagText: "text-primary",
+                    icon: "📐",
                   },
                   {
-                    month: "Month 3",
+                    phase: "Phase 03",
                     label: "Exam Boot Camp",
-                    desc: "Timed practice, past papers, and exam strategy. The final push — focused, structured, and confidence-building.",
-                    color: "bg-[oklch(0.82_0.08_55)/40] text-[oklch(0.38_0.10_55)]",
-                    line: null,
+                    desc: "Timed practice, past papers, exam strategy. The final push — focused, structured, and confidence-building.",
+                    accent: "border-l-[oklch(0.62_0.12_55)]",
+                    numBg: "bg-[oklch(0.82_0.08_55)/40]",
+                    numText: "text-[oklch(0.38_0.10_55)]",
+                    tagBg: "bg-[oklch(0.82_0.08_55)/35]",
+                    tagText: "text-[oklch(0.35_0.09_55)]",
+                    icon: "🎯",
                   },
-                ].map((phase, idx) => (
-                  <div key={phase.month} className="flex gap-4">
-                    {/* Timeline spine */}
-                    <div className="flex flex-col items-center">
-                      <div className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${phase.color}`}>
-                        {idx + 1}
-                      </div>
-                      {phase.line && <div className={`my-1 w-0.5 flex-1 ${phase.line}`} style={{ minHeight: "2rem" }} />}
+                ].map((p) => (
+                  <div
+                    key={p.phase}
+                    className={`flex items-start gap-4 rounded-2xl border border-border/50 border-l-4 bg-background/65 px-5 py-4 ${p.accent}`}
+                  >
+                    {/* Large phase number */}
+                    <div className={`flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl text-center ${p.numBg}`}>
+                      <span className="text-[9px] font-black uppercase leading-none tracking-widest opacity-60" style={{ color: "inherit" }}>
+                        <span className={p.numText.replace("text-", "color-")}></span>
+                      </span>
+                      <span className={`text-lg font-black leading-none ${p.numText}`}>{p.icon}</span>
                     </div>
-                    <div className="pb-6">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{phase.month}</p>
-                      <p className="mt-0.5 font-bold">{phase.label}</p>
-                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{phase.desc}</p>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] ${p.tagBg} ${p.tagText}`}>
+                          {p.phase}
+                        </span>
+                      </div>
+                      <p className="mt-1 font-bold leading-snug">{p.label}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              {/* What's included list */}
-              <div className="relative z-10 mt-2 space-y-2 rounded-2xl border border-border/50 bg-background/60 p-4">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">Every session includes</p>
+
+              {/* What's included */}
+              <div className="relative z-10 mt-5 grid grid-cols-2 gap-2">
                 {[
-                  "3 × 2hr lessons per week",
-                  "Custom worksheets per topic",
-                  "WhatsApp support throughout",
-                  "Exam strategy in Month 3",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-2.5 text-sm">
-                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-primary" />
-                    <span className="font-medium">{item}</span>
+                  { icon: Clock, text: "3 × 2hr lessons / week" },
+                  { icon: FileText, text: "Custom worksheets" },
+                  { icon: MessageCircle, text: "WhatsApp support" },
+                  { icon: Sparkles, text: "Exam strategy included" },
+                ].map(({ icon: Icon, text }) => (
+                  <div key={text} className="flex items-center gap-2 rounded-xl border border-border/50 bg-background/60 px-3 py-2.5 text-xs font-semibold text-muted-foreground">
+                    <Icon className="h-3.5 w-3.5 shrink-0 text-primary" />
+                    {text}
                   </div>
                 ))}
               </div>
