@@ -1,0 +1,3 @@
+{
+  "startupCommands": ["/root/.bun/bin/bun install; /root/.bun/bin/bun run dev"]
+}
