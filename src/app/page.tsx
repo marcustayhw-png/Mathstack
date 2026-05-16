@@ -89,13 +89,11 @@ const testimonials = [
 ];
 
 const ENSO_PATH = "M50 8 C79 8, 94 27, 94 50 C94 73, 79 92, 50 92 C21 92, 6 73, 6 50 C6 29, 19 12, 36 8.5";
-const ENSO_STROKE = "#C2705A";
+// Three rings, three Satori palette colours: terracotta · sage · warm amber
 const RINGS = [
-  { size: "min(76vw, 76vh)", left: "50%", top: "49%", x: "-50%", y: "-50%", peak: 0.5, rest: 0.12, sw: 2.2, delay: 0.1, dur: 2.8, rot: -8 },
-  { size: "min(46vw, 46vh)", left: "16%", top: "24%", x: "-50%", y: "-50%", peak: 0.38, rest: 0.1, sw: 2.8, delay: 0.55, dur: 2.35, rot: 22 },
-  { size: "min(38vw, 38vh)", left: "84%", top: "27%", x: "-50%", y: "-50%", peak: 0.36, rest: 0.1, sw: 3, delay: 0.95, dur: 2.2, rot: -34 },
-  { size: "min(33vw, 33vh)", left: "20%", top: "77%", x: "-50%", y: "-50%", peak: 0.34, rest: 0.09, sw: 3.2, delay: 1.35, dur: 2, rot: -18 },
-  { size: "min(42vw, 42vh)", left: "83%", top: "79%", x: "-50%", y: "-50%", peak: 0.36, rest: 0.1, sw: 2.9, delay: 1.75, dur: 2.25, rot: 28 },
+  { size: "min(72vw, 72vh)", left: "50%",  top: "50%",  x: "-50%", y: "-50%", peak: 0.48, rest: 0.11, sw: 2.2, delay: 0.1,  dur: 2.8,  rot: -8,  stroke: "#C2705A", tipFill: "#C2705A" },
+  { size: "min(44vw, 44vh)", left: "14%",  top: "26%",  x: "-50%", y: "-50%", peak: 0.36, rest: 0.09, sw: 2.8, delay: 0.6,  dur: 2.4,  rot: 20,  stroke: "#7A9E7E", tipFill: "#7A9E7E" },
+  { size: "min(40vw, 40vh)", left: "86%",  top: "72%",  x: "-50%", y: "-50%", peak: 0.34, rest: 0.09, sw: 3.0, delay: 1.1,  dur: 2.2,  rot: -30, stroke: "#C49A3C", tipFill: "#C49A3C" },
 ] as const;
 
 function AnimatedEnsoBackground() {
@@ -124,11 +122,11 @@ function AnimatedEnsoBackground() {
             delay: ring.delay,
           }}
         >
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full overflow-visible drop-shadow-[0_18px_35px_rgba(194,112,90,0.12)]">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full overflow-visible drop-shadow-[0_18px_35px_rgba(194,112,90,0.10)]">
             <motion.path
               d={ENSO_PATH}
               pathLength={1}
-              stroke={ENSO_STROKE}
+              stroke={ring.stroke}
               strokeWidth={ring.sw}
               strokeLinecap="round"
               fill="none"
@@ -139,7 +137,7 @@ function AnimatedEnsoBackground() {
             />
             <motion.path
               d="M34.5 7.8 C34 5.8, 36.5 4.5, 38 6.5 C36.5 7.8, 35 8.8, 34.5 7.8Z"
-              fill={ENSO_STROKE}
+              fill={ring.tipFill}
               initial={{ opacity: 0, scale: 0, rotate: -8 }}
               animate={{ opacity: i === 0 ? 0.9 : 0.72, scale: 1, rotate: 0 }}
               transition={{ duration: 0.45, delay: ring.delay + ring.dur - 0.08, ease: "backOut" }}

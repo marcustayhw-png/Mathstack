@@ -56,6 +56,11 @@ const WHAT_YOU_GET = [
     title: "Past Paper Guidance",
     desc: "Systematic O-Level and N-Level style drilling, with walkthroughs that show how to think through the question.",
   },
+  {
+    icon: HeartHandshake,
+    title: "Quality Education, Made Affordable",
+    desc: "We believe great tuition should not be out of reach. Our rates are kept fair and transparent — no hidden tiers, no surprise costs — so every student who needs support can access it.",
+  },
 ];
 
 const RATES = [
@@ -511,63 +516,107 @@ export default function TuitionPage() {
             </div>
           </motion.div>
 
-          {/* Feature pills */}
-          <motion.div variants={fadeUp} className="flex flex-wrap gap-2.5">
-            {[
-              { icon: Clock, text: "3 × 2hr lessons per week" },
-              { icon: CalendarCheck, text: "3 months, one flat fee" },
-              { icon: BookOpen, text: "Back-to-basics curriculum" },
-              { icon: HeartHandshake, text: "Supportive, no-shame space" },
-              { icon: Sparkles, text: "Exam boot camp ready" },
-            ].map(({ icon: Icon, text }) => (
-              <div
-                key={text}
-                className="flex items-center gap-2 rounded-full border border-border/60 bg-card/80 px-4 py-2 text-sm font-semibold text-muted-foreground shadow-sm"
-              >
-                <Icon className="h-3.5 w-3.5 text-primary" />
-                {text}
+          {/* Two-column layout: phases + pricing */}
+          <motion.div variants={stagger} className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+
+            {/* Left — Phase timeline */}
+            <motion.div variants={fadeUp} className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/85 p-7 shadow-sm">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/6 blur-2xl" />
+              <div className="relative z-10 mb-6 space-y-1">
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">How It Unfolds</p>
+                <h3 className="text-xl font-bold">3 months. 3 phases.</h3>
+                <p className="text-sm text-muted-foreground">Each month builds on the last — from foundations to full confidence.</p>
               </div>
-            ))}
-          </motion.div>
-
-          {/* Pricing cards */}
-          <motion.div variants={stagger} className="grid gap-5 sm:grid-cols-2 lg:max-w-2xl">
-            {BRIDGING_TIERS.map((tier, i) => (
-              <motion.div
-                key={tier.level}
-                variants={fadeUp}
-                whileHover={{ y: -6, scale: 1.015 }}
-                className="group relative overflow-hidden rounded-3xl border border-primary/20 bg-primary/5 p-7 shadow-sm transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10"
-              >
-                <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/8 via-transparent to-accent/8 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="relative z-10 space-y-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">{tier.level}</p>
-                      <p className="mt-1 text-sm text-muted-foreground">{tier.audience}</p>
+              <div className="relative z-10 space-y-0">
+                {[
+                  {
+                    month: "Month 1",
+                    label: "Rebuild the Roots",
+                    desc: "We go back without shame — identifying every gap and patching them gently, one at a time. No rushing.",
+                    color: "bg-[oklch(0.88_0.04_148)/60] text-[oklch(0.30_0.09_148)]",
+                    line: "bg-[oklch(0.75_0.06_148)/50]",
+                  },
+                  {
+                    month: "Month 2",
+                    label: "Build Upward",
+                    desc: "With a solid base in place, we layer on concepts systematically — connecting the dots between topics.",
+                    color: "bg-primary/10 text-primary",
+                    line: "bg-primary/20",
+                  },
+                  {
+                    month: "Month 3",
+                    label: "Exam Boot Camp",
+                    desc: "Timed practice, past papers, and exam strategy. The final push — focused, structured, and confidence-building.",
+                    color: "bg-[oklch(0.82_0.08_55)/40] text-[oklch(0.38_0.10_55)]",
+                    line: null,
+                  },
+                ].map((phase, idx) => (
+                  <div key={phase.month} className="flex gap-4">
+                    {/* Timeline spine */}
+                    <div className="flex flex-col items-center">
+                      <div className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${phase.color}`}>
+                        {idx + 1}
+                      </div>
+                      {phase.line && <div className={`my-1 w-0.5 flex-1 ${phase.line}`} style={{ minHeight: "2rem" }} />}
                     </div>
-                    <span className="shrink-0 rounded-full border border-primary/20 bg-primary/15 px-3.5 py-1.5 text-xs font-bold text-primary">
-                      {tier.saving}
-                    </span>
+                    <div className="pb-6">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{phase.month}</p>
+                      <p className="mt-0.5 font-bold">{phase.label}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{phase.desc}</p>
+                    </div>
                   </div>
-                  <div className="flex items-end gap-1.5 pt-1">
-                    <span className="text-5xl font-bold leading-none tracking-tight text-foreground">{tier.price}</span>
-                    <span className="mb-1.5 text-sm font-semibold text-muted-foreground">/ month</span>
+                ))}
+              </div>
+              {/* What's included list */}
+              <div className="relative z-10 mt-2 space-y-2 rounded-2xl border border-border/50 bg-background/60 p-4">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">Every session includes</p>
+                {[
+                  "3 × 2hr lessons per week",
+                  "Custom worksheets per topic",
+                  "WhatsApp support throughout",
+                  "Exam strategy in Month 3",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-2.5 text-sm">
+                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-primary" />
+                    <span className="font-medium">{item}</span>
                   </div>
-                  <div className="rounded-2xl border border-border/50 bg-background/60 p-4">
-                    <p className="text-sm font-bold">3 × 2hr lessons per week</p>
-                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                      Intensive yet gentle — structured to rebuild fundamentals and reach exam readiness within 3 months.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                ))}
+              </div>
+            </motion.div>
 
-          <motion.p variants={fadeUp} className="text-xs text-muted-foreground">
-            * One-time intake · Limited spots available · Pricing is per student per month for the 3-month duration.
-          </motion.p>
+            {/* Right — Pricing cards */}
+            <div className="space-y-5">
+              {BRIDGING_TIERS.map((tier, i) => (
+                <motion.div
+                  key={tier.level}
+                  variants={fadeUp}
+                  whileHover={{ y: -5, scale: 1.015 }}
+                  className="group relative overflow-hidden rounded-3xl border border-primary/20 bg-primary/5 p-7 shadow-sm transition-all duration-300 hover:border-primary/35 hover:shadow-lg hover:shadow-primary/10"
+                >
+                  <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/6 via-transparent to-accent/6 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="relative z-10 space-y-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">{tier.level}</p>
+                        <p className="mt-1 text-sm font-semibold">{tier.audience}</p>
+                      </div>
+                      <span className="shrink-0 rounded-full border border-primary/20 bg-primary/15 px-3.5 py-1.5 text-xs font-bold text-primary">
+                        {tier.saving}
+                      </span>
+                    </div>
+                    <div className="flex items-end gap-1.5">
+                      <span className="text-5xl font-bold leading-none tracking-tight text-foreground">{tier.price}</span>
+                      <span className="mb-1.5 text-sm font-semibold text-muted-foreground">/ month</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">per student · for 3 months</p>
+                  </div>
+                </motion.div>
+              ))}
+              <motion.div variants={fadeUp} className="rounded-2xl border border-border/50 bg-card/70 p-4 text-xs text-muted-foreground leading-relaxed">
+                * One-time intake · Limited spots available · Both levels run simultaneously — enrol early to secure a place.
+              </motion.div>
+            </div>
+          </motion.div>
         </motion.section>
 
         <Divider />
