@@ -16,6 +16,34 @@ const navItems = [
   { href: "/about", label: "About" },
 ];
 
+/* Native logo mark — enso SVG that uses site colour tokens directly,
+   used in dark mode (and as fallback) so it feels part of the site */
+function SatoriMark({ size = 34 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Thin enso — open at top, slight hand-drawn asymmetry */}
+      <path
+        d="M20.5 5.5 C30.2 5.8, 36.5 12.2, 36.2 20.4 C35.9 28.8, 29 35.2, 20 35 C11 34.8, 4.2 28.2, 4.5 19.8 C4.7 13.4, 8.8 8.3, 15.2 6.4"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        fill="none"
+        className="text-primary"
+      />
+      {/* Tiny maple leaf bridging the gap at top — stem anchors the two ends */}
+      <path
+        d="M17.8 5.2 C18.3 3.8, 19.5 3.2, 20.8 3.8 C21.8 4.3, 22 5.2, 21.2 5.8 C20.4 6.4, 19 6.8, 17.8 5.2Z"
+        fill="currentColor"
+        opacity="0.65"
+        className="text-[#7A9E7E]"
+        style={{ fill: "#7A9E7E" }}
+      />
+      {/* Leaf stem */}
+      <line x1="19.5" y1="5.2" x2="19.5" y2="7" stroke="#7A9E7E" strokeWidth="0.9" strokeLinecap="round" opacity="0.6" />
+    </svg>
+  );
+}
+
 export function Navigation() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,18 +74,37 @@ export function Navigation() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center transition-all duration-300 hover:opacity-75 group"
+            className="flex items-center gap-2.5 transition-all duration-300 hover:opacity-75 group"
             onClick={() => setMobileMenuOpen(false)}
           >
+            {/* Light mode: image with multiply blend so linen bg dissolves into nav */}
             <Image
               src="/logo-horizontal.jpg"
               alt="Satori Education Studio"
-              width={200}
-              height={67}
-              className="h-9 w-auto object-contain"
+              width={210}
+              height={70}
+              className="h-10 w-auto object-contain dark:hidden"
               style={{ mixBlendMode: "multiply" }}
               priority
             />
+            {/* Dark mode: native SVG mark + text using site colour tokens */}
+            <span className="hidden dark:flex items-center gap-2.5">
+              <SatoriMark size={32} />
+              <span className="flex flex-col leading-none gap-0.5">
+                <span
+                  className="text-[14px] font-bold tracking-wide text-foreground"
+                  style={{ fontFamily: "'Quicksand', sans-serif" }}
+                >
+                  Satori
+                </span>
+                <span
+                  className="text-[9.5px] font-medium tracking-[0.18em] text-muted-foreground uppercase"
+                  style={{ fontFamily: "'Quicksand', sans-serif" }}
+                >
+                  Education Studio
+                </span>
+              </span>
+            </span>
           </Link>
 
           {/* Desktop nav */}
